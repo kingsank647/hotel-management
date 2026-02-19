@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Majestic Hotel Booking</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+        }
+        header img {
+            height: 60px;
+        }
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            background-color: #444;
+        }
+        nav ul li {
+            margin: 0 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 10px;
+            display: block;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        .container {
+            max-width: 600px;
+            background: white;
+            padding: 30px;
+            margin: 40px auto;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        label {
+            font-weight: bold;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <img src="images/Majestic_Hotel_hd.png" alt="Majestic Hotel">
+</header>
+
+<nav>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Explore</a></li>
+        <li><a href="#">Rooms</a></li>
+        <li><a href="#">Booking</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <h2>Hotel Booking Form</h2>
+    <form id="bookingForm">
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+
+        <label for="room">Room Type</label>
+        <select id="room" required>
+            <option value="">--Select Room--</option>
+            <option value="Luxury Suite">Luxury Suite</option>
+            <option value="Delux Suite">Delux Suite</option>
+            <option value="Premier Suite">Premier Suite</option>
+            <option value="Luxury Room">Luxury Room</option>
+            <option value="Delux Room">Delux Room</option>
+            <option value="Premier Room">Premier Room</option>
+        </select>
+
+        <label for="rooms">Number of Rooms</label>
+        <input type="number" id="rooms" min="1" value="1" required>
+
+        <label for="guests">Number of Guests</label>
+        <input type="number" id="guests" min="1" value="1" required>
+
+        <label for="arrival">Arrival Date</label>
+        <input type="date" id="arrival" required>
+
+        <label for="departure">Departure Date</label>
+        <input type="date" id="departure" required>
+
+        <button type="submit">Book Now</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2025 Majestic Hotel. All rights reserved.</p>
+</footer>
+
+<script>
+document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const bookingData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        room_type: document.getElementById('room').value,
+        num_rooms: document.getElementById('rooms').value,
+        num_guests: document.getElementById('guests').value,
+        arrival_date: document.getElementById('arrival').value,
+        departure_date: document.getElementById('departure').value
+    };
+
+    fetch('http://localhost:5000/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData)
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.status);
+        document.getElementById('bookingForm').reset();
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Booking failed. Try again.");
+    });
+});
+</script>
+
+</body>
+</html>
