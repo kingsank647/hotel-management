@@ -6,11 +6,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+# Get database URL from environment variable
 DATABASE_URL = os.environ.get("DATABASE_URL")
 
 def get_connection():
     return psycopg2.connect(DATABASE_URL)
 
+# Initialize database table
 def init_db():
     conn = get_connection()
     cur = conn.cursor()
@@ -57,4 +59,5 @@ def book_room():
 
 if __name__ == "__main__":
     init_db()
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
