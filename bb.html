@@ -151,7 +151,7 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
         departure_date: document.getElementById('departure').value
     };
 
-    fetch('http://localhost:5000/book', {
+    fetch('https://hotel-management-98e6.onrender.com/book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bookingData)
@@ -167,6 +167,7 @@ document.getElementById('bookingForm').addEventListener('submit', function(e) {
     });
 });
 </script>
+
 
 </body>
 </html>
